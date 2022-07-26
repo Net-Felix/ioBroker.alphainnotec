@@ -105,6 +105,9 @@ For later updates, the above procedure is not necessary. Just do the following:
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+- minor fixes
+
 ### 0.0.3 (2022-07-26)
 - fixed admin page
 
