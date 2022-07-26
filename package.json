@@ -1,6 +1,6 @@
 {
   "name": "iobroker.alphainnotec",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Polls Data from AlphaInnotec Heatpump",
   "author": {
     "name": "Felix Amler",

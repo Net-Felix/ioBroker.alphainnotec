@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alphainnotec",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "news": {
+            "0.0.3": {
+                "en": "fixed admin page",
+                "de": "admin seite",
+                "ru": "фиксированная страница admin",
+                "pt": "página de administrador fixo",
+                "nl": "_",
+                "fr": "page d'administration fixe",
+                "it": "pagina admin fissa",
+                "es": "página de administración fija",
+                "pl": "strona adminowa",
+                "zh-cn": "固定页"
+            },
             "0.0.2": {
                 "en": "added admin page",
                 "de": "admin seite",
