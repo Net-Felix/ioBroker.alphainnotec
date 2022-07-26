@@ -3,13 +3,10 @@
 <head>
 
 	<!-- Load ioBroker scripts and styles-->
-	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
 	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
 	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
-
-	<!-- Load our own files -->
-	<link rel="stylesheet" type="text/css" href="style.css" />
 
 	<!-- these files always have to be included -->
     <script type="text/javascript" src="../../js/translate.js"></script>
@@ -17,90 +14,117 @@
     <script type="text/javascript" src="../../js/adapter-settings.js"></script>
     <script type="text/javascript" src="words.js"></script>
 
+	<!-- Load our own files -->
+	<link rel="stylesheet" type="text/css" href="style.css" />
+
 	<script type="text/javascript">
         // This will be called by the admin adapter when the settings page loads
-        function load(settings, onChange) {
-            // example: select elements with id=key and class=value and insert value
-            if (!settings) return;
-            $('.value').each(function() {
-                var $key = $(this);
-                var id = $key.attr('id');
-                if ($key.attr('type') === 'checkbox') {
-                    // do not call onChange direct, because onChange could expect some arguments
-                    $key.prop('checked', settings[id])
-                        .on('change', () => onChange());
-                } else {
-                    // do not call onChange direct, because onChange could expect some arguments
-                    $key.val(settings[id])
-                        .on('change', () => onChange())
-                        .on('keyup', () => onChange());
-                }
-            });
-            onChange(false);
-            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-            if (M) M.updateTextFields();
-        }
+        var _secret;
 
-        // This will be called by the admin adapter when the user presses the save button
-        function save(callback) {
-            // example: select elements with class=value and build settings object
-            var obj = {};
-            $('.value').each(function() {
-                var $this = $(this);
-                if ($this.attr('type') === 'checkbox') {
-                    obj[$this.attr('id')] = $this.prop('checked');
-                } else if ($this.attr('type') === 'number') {
-                    obj[$this.attr('id')] = parseFloat($this.val());
-                } else {
-                    obj[$this.attr('id')] = $this.val();
-                }
-            });
-            callback(obj);
-        }
+		// the function loadSettings has to exist ...
+		function load(settings, onChange) {
+			if (typeof supportsFeature !== 'function' || !supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+				if (typeof systemSecret !== 'undefined') {
+					_secret = systemSecret;
+				} else {
+					_secret = (systemConfig && systemConfig.native && systemConfig.native.secret) || 'Zgfr56gFe87jJOM';
+				}
+				if (settings.token) {
+					settings.token = decrypt(_secret, settings.token);
+				}
+			}
+
+			for (var key in settings) {
+				if (!settings.hasOwnProperty(key)) continue;
+				var $value = $('#' + key + '.value');
+				if ($value.attr('type') === 'checkbox') {
+					$value.prop('checked', settings[key]).on('change', function() {
+						onChange();
+					});
+				} else {
+					$value.val(settings[key]).on('change', function() {
+						onChange();
+					}).on('keyup', function() {
+						onChange();
+					});
+				}
+			}
+			onChange(false);
+			$('#test').click(test);
+		}
+
+        function getSettings() {
+			var obj = {};
+
+			$('.value').each(function () {
+				var $this = $(this);
+				var id = $this.attr('id');
+
+				if ($this.attr('type') === 'checkbox') {
+					obj[id] = $this.prop('checked');
+				} else {
+					obj[id] = $this.val();
+				}
+			});
+
+			if (typeof supportsFeature !== 'function' || !supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+				if (obj.token) {
+					obj.token = encrypt(_secret, obj.token);
+				}
+			}
+
+			return obj;
+		}
+
+		function save(callback) {
+			callback(getSettings());
+		}
     </script>
 
 </head>
 
 <body>
-
-	<!-- this is where the React components are loaded into -->
-	<div class="m adapter-container" id="root">
-		<div class="row">
-            <div class="col s12 m4 l2">
-                <img src="alphainnotec.png" class="logo">
-            </div>
+	<div id="adapter-container">
+		<div class="m adapter-container">
 			<div class="row">
-
-				<div class="col s6 input-field">
-					<input type="text" class="value" id="ipaddress" />
-					<label for="ipaddress" class="translate">ipaddress</label>
+				<div class="col s12 m4 l2">
+					<img src="alphainnotec.png" class="logo">
 				</div>
+				<div class="row">
 
-				<div class="col s6 input-field">
-					<input type="text" class="value" id="port" value="8214" />
-					<label for="port" class="translate">port</label>
-				</div>
+					<div class="col s6 input-field">
+						<input type="text" class="value" id="ipaddress" />
+						<label for="ipaddress" class="translate">ipaddress</label>
+					</div>
 
-				<div class="col s6 input-field">
-					<input type="password" class="value" id="password" />
-					<label for="password" class="translate">password</label>
-				</div>
+					<div class="col s6 input-field">
+						<input type="text" class="value" id="port" value="8214" />
+						<label for="port" class="translate">port</label>
+					</div>
 
-				<div class="col s6 input-field">
-					<input type="number" class="value" id="polltime" min="5" />
-					<label for="polltime" class="translate">polltime</label>
-				</div>
+					<div class="col s6 input-field">
+						<input type="password" class="value" id="password" />
+						<label for="password" class="translate">password</label>
+					</div>
 
-			</div><!--
-			<div class="row">
-				<div class="col s12 input-field">
-					<span class="translate" for="blacklist">blacklist</span>
-					<textarea class="value" id="blacklist" rows="10" />
-					<label for="blacklist" class="translate">blacklist</label>
+					<div class="col s6 input-field">
+						<input type="number" class="value" id="polltime" min="5" />
+						<label for="polltime" class="translate">polltime</label>
+					</div>
+
 				</div>
-			</div>-->
-        </div>
+				<div class="row">
+					<!--<div class="col s12 input-field">
+						<span class="translate" for="blacklist">blacklist</span>
+						<textarea class="value" id="blacklist" rows="10" />
+						<label for="blacklist" class="translate">blacklist</label>
+					</div>-->
+				</div>
+			</div>
+		</div>
 	</div>
+	<!-- this is where the React components are loaded into -->
+
 
 	<!-- load compiled React scripts -->
 	<script type="text/javascript" src="build/index.js"></script>
