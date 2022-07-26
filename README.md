@@ -104,6 +104,10 @@ For later updates, the above procedure is not necessary. Just do the following:
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+- fixed admin page visibility
+
 ### 0.0.4 (2022-07-26)
 - minor fixes
 
