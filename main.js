@@ -102,7 +102,7 @@ class Alphainnotec extends utils.Adapter {
 		if (message.Navigation) {
 			message.Navigation.item.item.forEach(this.wsGetItems.bind(this));
 		} else {
-			this.wsProcessResponse(message.Content.name, message.Content.item)
+			this.wsProcessResponse(message.Content.name, message.Content.item);
 		}
 	}
 
@@ -151,12 +151,13 @@ class Alphainnotec extends utils.Adapter {
 						name: value.name,
 						type: type,
 						role: "state",
+						unit: "",
 						read: true,
 						write: false,
 					},
 					native: {},
 				});
-				this.setStateAsync(state, { val: val, ack: true });
+				await this.setStateAsync(state, { val: val, ack: true });
 			}
 		}
 	}
