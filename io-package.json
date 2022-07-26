@@ -1,95 +1,107 @@
 {
-	"common": {
-		"name": "alphainnotec",
-		"version": "0.0.1",
-		"news": {
-			"0.0.1": {
-				"en": "initial release",
-				"de": "Erstveröffentlichung"
-			}
-		},
-		"title": "AlphaInnotec",
-		"titleLang": {
-			"en": "AlphaInnotec",
-			"de": "AlphaInnotec",
-			"ru": "АльфаИннотек",
-			"pt": "AlphaInnotec",
-			"nl": "AlphaInnotec",
-			"fr": "Alpha Innotec",
-			"it": "Alpha Innotec",
-			"es": "AlphaInnotec",
-			"pl": "AlphaInnotec",
-			"zh-cn": "AlphaInnotec"
-		},
-		"desc": {
-			"en": "Polls Data from AlphaInnotec Heatpump",
-			"de": "Fragt Daten von AlphaInnotec Heatpump ab",
-			"ru": "Данные опросов от AlphaInnotec Heatpump",
-			"pt": "Dados de pesquisas do AlphaInnotec Heatpump",
-			"nl": "Polls-gegevens van AlphaInnotec-warmtepomp",
-			"fr": "Sondages des données de la pompe à chaleur AlphaInnotec",
-			"it": "Sondaggi dati dalla pompa di calore AlphaInnotec",
-			"es": "Datos de encuestas de la bomba de calor AlphaInnotec",
-			"pl": "Dane z sondaży z pompy ciepła AlphaInnotec",
-			"zh-cn": "来自 AlphaInnotec Heatpump 的民意调查数据"
-		},
-		"authors": [
-			"Felix Amler <felix@amler.eu>"
-		],
-		"keywords": [
-			"Heatpump",
-			"AlphaInnotec",
-			"SmartHome"
-		],
-		"license": "MIT",
-		"platform": "Javascript/Node.js",
-		"main": "main.js",
-		"icon": "alphainnotec.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/Net-Felix/ioBroker.alphainnotec/main/admin/alphainnotec.png",
-		"readme": "https://github.com/Net-Felix/ioBroker.alphainnotec/blob/main/README.md",
-		"loglevel": "info",
-		"mode": "daemon",
-		"type": "iot-systems",
-		"compact": true,
-		"connectionType": "local",
-		"dataSource": "poll",
-		"materialize": true,
-		"eraseOnUpload": true,
-		"dependencies": [
-			{
-				"js-controller": ">=2.0.0"
-			}
-		]
-	},
-	"native": {
-		"password": "0000",
-		"port": 8214,
-		"polltime": 30,
-		"ipaddress": ""
-	},
-	"objects": [],
-	"instanceObjects": [
-		{
-			"_id": "info",
-			"type": "channel",
-			"common": {
-				"name": "Information"
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.connection",
-			"type": "state",
-			"common": {
-				"role": "indicator.connected",
-				"name": "Device or service connected",
-				"type": "boolean",
-				"read": true,
-				"write": false,
-				"def": false
-			},
-			"native": {}
-		}
-	]
+    "common": {
+        "name": "alphainnotec",
+        "version": "0.0.2",
+        "news": {
+            "0.0.2": {
+                "en": "added admin page",
+                "de": "admin seite",
+                "ru": "добавлена страница admin",
+                "pt": "página de administração adicionada",
+                "nl": "admin pagina",
+                "fr": "ajouté admin page",
+                "it": "pagina di amministratore aggiunto",
+                "es": "página de administración agregada",
+                "pl": "dodać",
+                "zh-cn": "增页"
+            },
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung"
+            }
+        },
+        "title": "AlphaInnotec",
+        "titleLang": {
+            "en": "AlphaInnotec",
+            "de": "AlphaInnotec",
+            "ru": "АльфаИннотек",
+            "pt": "AlphaInnotec",
+            "nl": "AlphaInnotec",
+            "fr": "Alpha Innotec",
+            "it": "Alpha Innotec",
+            "es": "AlphaInnotec",
+            "pl": "AlphaInnotec",
+            "zh-cn": "AlphaInnotec"
+        },
+        "desc": {
+            "en": "Polls Data from AlphaInnotec Heatpump",
+            "de": "Fragt Daten von AlphaInnotec Heatpump ab",
+            "ru": "Данные опросов от AlphaInnotec Heatpump",
+            "pt": "Dados de pesquisas do AlphaInnotec Heatpump",
+            "nl": "Polls-gegevens van AlphaInnotec-warmtepomp",
+            "fr": "Sondages des données de la pompe à chaleur AlphaInnotec",
+            "it": "Sondaggi dati dalla pompa di calore AlphaInnotec",
+            "es": "Datos de encuestas de la bomba de calor AlphaInnotec",
+            "pl": "Dane z sondaży z pompy ciepła AlphaInnotec",
+            "zh-cn": "来自 AlphaInnotec Heatpump 的民意调查数据"
+        },
+        "authors": [
+            "Felix Amler <felix@amler.eu>"
+        ],
+        "keywords": [
+            "Heatpump",
+            "AlphaInnotec",
+            "SmartHome"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "alphainnotec.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/Net-Felix/ioBroker.alphainnotec/main/admin/alphainnotec.png",
+        "readme": "https://github.com/Net-Felix/ioBroker.alphainnotec/blob/main/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "iot-systems",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "poll",
+        "materialize": true,
+        "eraseOnUpload": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
+    },
+    "native": {
+        "password": "0000",
+        "port": 8214,
+        "polltime": 30,
+        "ipaddress": ""
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        }
+    ]
 }
