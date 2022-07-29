@@ -98,12 +98,10 @@ class Alphainnotec extends utils.Adapter {
 	async wsHandleMessage(error, message) {
 		// check if we got navigation
 		if (message.Navigation) {
-			if (Array.isArray(message.Navigation.item.item)) {
-				try {
-					message.Navigation.item.item.forEach(this.wsGetItems.bind(this));
-				} catch (err) {
-					this.log.debug(err);
-				}
+			try {
+				message.Navigation.item.item.forEach(this.wsGetItems.bind(this));
+			} catch (err) {
+				return;
 			}
 		} else {
 			this.wsProcessResponse(message.Content.name, message.Content.item);
