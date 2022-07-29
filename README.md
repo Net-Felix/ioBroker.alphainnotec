@@ -104,6 +104,9 @@ For later updates, the above procedure is not necessary. Just do the following:
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- fixed an error in message processing
+
 ### 0.1.0 (2022-07-29)
 - fixed restart loop and added blacklist
 
