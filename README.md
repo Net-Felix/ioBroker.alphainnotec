@@ -104,6 +104,9 @@ For later updates, the above procedure is not necessary. Just do the following:
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- fixed restart loop and added blacklist
+
 ### 0.0.5 (2022-07-26)
 - fixed admin page visibility
 
