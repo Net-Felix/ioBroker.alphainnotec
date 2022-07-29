@@ -46,10 +46,8 @@ class Alphainnotec extends utils.Adapter {
      */
 	wsConnect() {
 		// bind to events
-		this.ws.on("connect", this.wsHandleConnection.bind(this));
-		this.ws.on("connectFailed", this.wsHandleError.bind(this));
-		this.log.debug("Connecting to heatpump");
-		this.ws.connect("ws://" + this.config.ipaddress + ":" + this.config.port, "Lux_WS");
+		this.log.debug("Connection to heatpump");
+		this.ws.connect(`ws://${this.config.ipaddress}:${this.config.port}`, "Lux_WS");
 	}
 
 	// Reconnect to websoccet
@@ -89,7 +87,7 @@ class Alphainnotec extends utils.Adapter {
 
 	async wsPollData() {
 		if (this.connection && this.connection.connected) {
-			this.connection.send("LOGIN;" + this.config.password);
+			this.connection.send(`LOGIN;${this.config.password}`);
 		}
 	}
 
@@ -107,7 +105,7 @@ class Alphainnotec extends utils.Adapter {
 	}
 
 	async wsGetItems(section) {
-		this.connection.send("GET;" + section.id);
+		this.connection.send(`GET;${section.id}`);
 	}
 
 	wsGetBool(str) {
@@ -125,14 +123,30 @@ class Alphainnotec extends utils.Adapter {
 		for (const [key, value] of Object.entries(items)) {
 			if (value.name) {
 				let type = "mixed";
+				let unit = "";
 				let val = value.value;
 				const name = value.name.replace(/\./g, "");
 				let state = topic.trim() + "." + name.trim();
+				let skip = false;
+
+				// Blacklist check
+				const lines = this.config.blacklist.split("\n");
+				for (let i = 0; i < lines.length; i++) {
+					const flags = lines[i].replace(/.*\/([gimy]*)$/, "$1");
+					const pattern = lines[i].replace(new RegExp("^/(.*?)/" + flags + "$"), "$1");
+					const regex = new RegExp(pattern, flags);
+					if (state.match(regex)) {
+						this.log.debug("skipping (" + state + "): " + lines[i]);
+						skip = true;
+					}
+				}
+				if (skip) { continue; }
 
 				// check if we got a float with a unit
-				if ((/^-?\s*[\d\.]+\s*[^\d]+$/.test(val)) && (!/^\d+:/.test(val))) {
-					const matches = val.match(/^(-?\s*[\d\.]+)\s*([^\d]+)$/);
+				if ((/^-?\s*[\d.]+\s*[^\d]+$/.test(val)) && (!/^\d+:/.test(val))) {
+					const matches = val.match(/^(-?\s*[\d.]+)\s*([^\d]+)$/);
 					val = parseFloat(matches[1]);
+					unit = matches[2] || "";
 					type = "number";
 				} else if (this.wsGetBool(value.value) !== undefined) {
 					val = this.wsGetBool(value.value);
@@ -151,9 +165,9 @@ class Alphainnotec extends utils.Adapter {
 						name: value.name,
 						type: type,
 						role: "state",
-						unit: "",
+						unit: unit,
 						read: true,
-						write: false,
+						write: false
 					},
 					native: {},
 				});
@@ -180,6 +194,8 @@ class Alphainnotec extends utils.Adapter {
 		// Reset the connection indicator during startup
 		this.setState("info.connection", false, true);
 
+		this.ws.on("connect", this.wsHandleConnection.bind(this));
+		this.ws.on("connectFailed", this.wsHandleError.bind(this));
 		this.wsConnect();
 		let interval = this.config.polltime;
 		if (interval < 5) {
