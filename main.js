@@ -127,7 +127,6 @@ class Alphainnotec extends utils.Adapter {
 		for (const [key, value] of Object.entries(items)) {
 			if (value.name) {
 				let type = "mixed";
-				let unit = "";
 				let val = value.value;
 				const name = value.name.replace(/\./g, "");
 				let state = topic.trim() + "." + name.trim();
@@ -150,7 +149,6 @@ class Alphainnotec extends utils.Adapter {
 				if ((/^-?\s*[\d.]+\s*[^\d]+$/.test(val)) && (!/^\d+:/.test(val))) {
 					const matches = val.match(/^(-?\s*[\d.]+)\s*([^\d]+)$/);
 					val = parseFloat(matches[1]);
-					unit = matches[2] || "";
 					type = "number";
 				} else if (this.wsGetBool(value.value) !== undefined) {
 					val = this.wsGetBool(value.value);
@@ -167,11 +165,10 @@ class Alphainnotec extends utils.Adapter {
 					type: "state",
 					common: {
 						name: value.name,
-						type: type,
-						role: "state",
-						unit: unit,
+						write: false,
 						read: true,
-						write: false
+						type: type,
+						role: "state"
 					},
 					native: {},
 				});
