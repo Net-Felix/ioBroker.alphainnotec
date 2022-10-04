@@ -104,7 +104,7 @@ For later updates, the above procedure is not necessary. Just do the following:
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.3 (2022-10-04)
 - bumped release
 
 ### 0.1.2 (2022-10-04)
