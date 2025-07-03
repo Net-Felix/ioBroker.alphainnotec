@@ -1,0 +1,7 @@
+{
+	"alphainnotec adapter settings": "alphainnotec的适配器设置",
+	"ipaddress": "IP地址",
+	"password": "Webinterface密码",
+	"port": "WebSocket端口",
+	"polltime": "更新之间的几秒钟"
+}

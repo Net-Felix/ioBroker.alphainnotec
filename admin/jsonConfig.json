@@ -1,0 +1,26 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"ipaddress": {
+			"type": "text",
+			"label": "ipaddress"
+		},
+		"password": {
+			"type": "text",
+			"label": "password"
+		},
+		"port": {
+			"type": "number",
+			"min": 1,
+			"max": 65535,
+			"label": "port"
+		},
+		"polltime": {
+			"type": "number",
+			"min": 5,
+			"max": 3600,
+			"label": "polltime"
+		}
+	}
+}

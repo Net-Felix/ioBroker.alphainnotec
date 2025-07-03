@@ -1,0 +1,7 @@
+{
+	"alphainnotec adapter settings": "Adapterinstellingen voor alphainnotec",
+	"ipaddress": "Ip-adres",
+	"password": "Webterface -wachtwoord",
+	"port": "Websocket -poort",
+	"polltime": "Seconden tussen updates"
+}

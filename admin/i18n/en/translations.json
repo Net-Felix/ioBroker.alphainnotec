@@ -1,0 +1,7 @@
+{
+	"alphainnotec adapter settings": "Adapter settings for alphainnotec",
+	"ipaddress": "IP-Address",
+	"password": "Webinterface password",
+	"port": "Websocket port",
+	"polltime": "Seconds between Updates"
+}

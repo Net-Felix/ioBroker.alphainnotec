@@ -1,0 +1,7 @@
+{
+	"alphainnotec adapter settings": "Ajustes del adaptador para alphainnotec",
+	"ipaddress": "Directorio",
+	"password": "Contraseña de la interfaz web",
+	"port": "Puerto websocket",
+	"polltime": "Segundos entre actualizaciones"
+}
