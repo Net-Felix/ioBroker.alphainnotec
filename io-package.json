@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "alphainnotec",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "news": {
+      "1.0.2": {
+        "en": "removed node v18.x support",
+        "de": "entfernter knoten v18.x unterstützung",
+        "ru": "поддержка удаленного узла v18.x",
+        "pt": "suporte do nó removido v18.x",
+        "nl": "verwijderd node v18.x ondersteuning",
+        "fr": "prise en charge du noeud v18.x enlevé",
+        "it": "rimosso nodo v18.x supporto",
+        "es": "soporte eliminado nodo v18.x",
+        "pl": "usunięto obsługę węzła v18.x",
+        "uk": "видалити вузол v18.x підтримка",
+        "zh-cn": "删除节点 v18.x 支持"
+      },
       "1.0.1": {
         "en": "fixed admin dependency",
         "de": "feste adminabhängigkeit",

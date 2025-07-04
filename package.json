@@ -1,6 +1,6 @@
 {
   "name": "iobroker.alphainnotec",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Polls Data from Heatpump",
   "author": {
     "name": "Net-Felix",

@@ -4,8 +4,7 @@
 	Placeholder for the next version (at the beginning of the line):
 	## **WORK IN PROGRESS**
 -->
-
-## **WORK IN PROGRESS**
+## 1.0.2 (2025-07-04)
 
 - removed node v18.x support
 
