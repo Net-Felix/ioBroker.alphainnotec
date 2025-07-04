@@ -39,11 +39,12 @@ class Alphainnotec extends utils.Adapter {
     this.on("unload", this.onUnload.bind(this));
   }
   wsConnect() {
-    this.log.debug(`Connection to Heatpump on ${this.config.ipaddress}:${this.config.port}`);
+    this.log.info(`Connection to Heatpump on ${this.config.ipaddress}:${this.config.port}`);
     this.ws.connect(`ws://${this.config.ipaddress}:${this.config.port}`, "Lux_WS");
   }
   async wsCheckStatus() {
     if (this.connection && this.connection.connected) {
+      this.log.debug("Connection is OK");
       this.setState("info.connection", { val: true, ack: true });
     } else {
       this.setState("info.connection", { val: false, ack: true });
@@ -56,10 +57,10 @@ class Alphainnotec extends utils.Adapter {
     this.wsConnect();
   }
   async wsHandleError(error) {
-    this.log.error("got an error: " + error.toString());
+    this.wsReconnect(error.toString());
   }
   async wsOnClose() {
-    this.log.error("Websocket closed");
+    this.wsReconnect("Websocket closed");
   }
   async wsHandleConnection(connection) {
     if (connection.connected) {
@@ -146,6 +147,7 @@ class Alphainnotec extends utils.Adapter {
     this.setState("info.connection", false, true);
     this.ws.on("connect", this.wsHandleConnection.bind(this));
     this.wsConnect();
+    this.wsPollData.bind(this);
     this.poller = setInterval(this.wsPollData.bind(this), this.config.polltime * 1e3);
     this.status = setInterval(this.wsCheckStatus.bind(this), 1e3);
   }
@@ -161,20 +163,6 @@ class Alphainnotec extends utils.Adapter {
       callback();
     }
   }
-  // If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-  // You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-  // /**
-  //  * Is called if a subscribed object changes
-  //  */
-  // private onObjectChange(id: string, obj: ioBroker.Object | null | undefined): void {
-  // 	if (obj) {
-  // 		// The object was changed
-  // 		this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-  // 	} else {
-  // 		// The object was deleted
-  // 		this.log.info(`object ${id} deleted`);
-  // 	}
-  // }
   /**
    * Is called if a subscribed state changes
    */
