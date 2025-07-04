@@ -122,19 +122,23 @@ class Alphainnotec extends utils.Adapter {
 			if (json.type == "Content") {
 				if (typeof json.name !== "undefined") {
 					const topfolder = json.name.replace(/\./g, "");
-					for (const item of json.items) {
-						const subname = item.name.replace(/\./g, "");
-						this.log.debug(`Found Section: ${topfolder}.${subname}`);
-						if (Array.isArray(item.items)) {
-							for (const datapoint of item.items) {
-								const dpName = `${topfolder}.${subname}.${datapoint.name.replace(/\./g, "")}`;
-								if (Array.isArray(datapoint.items)) {
-									for (const subdatapoint of datapoint.items) {
-										const subdpName = `${dpName}.${subdatapoint.name.replace(/\./g, "")}`;
-										await this.SetDatapoint(subdpName, subdatapoint.value);
+					// Poll only Informationen
+					if (json.name == "Informationen") {
+						for (const item of json.items) {
+							const subname = item.name.replace(/\./g, "");
+							this.log.debug(`Found Section: ${topfolder}.${subname}`);
+							if (Array.isArray(item.items)) {
+								for (const datapoint of item.items) {
+									//const dpName = `${topfolder}.${subname}.${datapoint.name.replace(/\./g, "")}`;
+									const dpName = `${subname}.${datapoint.name.replace(/\./g, "")}`;
+									if (Array.isArray(datapoint.items)) {
+										for (const subdatapoint of datapoint.items) {
+											const subdpName = `${dpName}.${subdatapoint.name.replace(/\./g, "")}`;
+											await this.SetDatapoint(subdpName, subdatapoint.value);
+										}
+									} else {
+										await this.SetDatapoint(dpName, datapoint.value);
 									}
-								} else {
-									await this.SetDatapoint(dpName, datapoint.value);
 								}
 							}
 						}
